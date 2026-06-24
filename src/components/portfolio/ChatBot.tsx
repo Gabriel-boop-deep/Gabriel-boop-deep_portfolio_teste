@@ -3,20 +3,19 @@ import { motion, AnimatePresence } from "framer-motion";
 import { MessageCircle, X, Send, Bot, User, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import ReactMarkdown from "react-markdown";
+import { generateLocalRagAnswer, RAG_CONFIG } from "@/lib/localRag";
 
 type Message = {
   role: "user" | "assistant";
   content: string;
 };
 
-const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/chat`;
-
 const ChatBot = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
     {
       role: "assistant",
-      content: "Olá! 👋 Sou o assistente virtual do Gabriel Nunes. Posso ajudar com informações sobre seus serviços de desenvolvimento web, projetos de IA e engenharia de dados. Como posso ajudar você hoje?",
+      content: "Olá! Sou o GABOT, assistente local do portfólio do Gabriel Nunes. Posso responder sobre perfil profissional, projetos, stack, IA, dados, desenvolvimento web e contato.",
     },
   ]);
   const [input, setInput] = useState("");
@@ -31,86 +30,40 @@ const ChatBot = () => {
     scrollToBottom();
   }, [messages]);
 
-  const streamChat = async (userMessages: Message[]) => {
-    const resp = await fetch(CHAT_URL, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
-      },
-      body: JSON.stringify({ messages: userMessages }),
-    });
-
-    if (!resp.ok || !resp.body) {
-      throw new Error("Failed to start stream");
-    }
-
-    const reader = resp.body.getReader();
-    const decoder = new TextDecoder();
-    let textBuffer = "";
+  const streamLocalAnswer = async (answer: string) => {
     let assistantContent = "";
-    let streamDone = false;
+    setMessages((prev) => [...prev, { role: "assistant", content: "" }]);
 
-    while (!streamDone) {
-      const { done, value } = await reader.read();
-      if (done) break;
-      textBuffer += decoder.decode(value, { stream: true });
-
-      let newlineIndex: number;
-      while ((newlineIndex = textBuffer.indexOf("\n")) !== -1) {
-        let line = textBuffer.slice(0, newlineIndex);
-        textBuffer = textBuffer.slice(newlineIndex + 1);
-
-        if (line.endsWith("\r")) line = line.slice(0, -1);
-        if (line.startsWith(":") || line.trim() === "") continue;
-        if (!line.startsWith("data: ")) continue;
-
-        const jsonStr = line.slice(6).trim();
-        if (jsonStr === "[DONE]") {
-          streamDone = true;
-          break;
-        }
-
-        try {
-          const parsed = JSON.parse(jsonStr);
-          const content = parsed.choices?.[0]?.delta?.content as string | undefined;
-          if (content) {
-            assistantContent += content;
-            setMessages((prev) => {
-              const last = prev[prev.length - 1];
-              if (last?.role === "assistant" && prev.length > 1) {
-                return prev.map((m, i) =>
-                  i === prev.length - 1 ? { ...m, content: assistantContent } : m
-                );
-              }
-              return [...prev, { role: "assistant", content: assistantContent }];
-            });
-          }
-        } catch {
-          textBuffer = line + "\n" + textBuffer;
-          break;
-        }
-      }
+    const chunks = answer.match(/.{1,22}(\s|$)/g) ?? [answer];
+    for (const chunk of chunks) {
+      assistantContent += chunk;
+      setMessages((prev) =>
+        prev.map((message, index) =>
+          index === prev.length - 1 ? { ...message, content: assistantContent } : message
+        )
+      );
+      await new Promise((resolve) => window.setTimeout(resolve, 16));
     }
   };
 
   const handleSend = async () => {
     if (!input.trim() || isLoading) return;
 
-    const userMsg: Message = { role: "user", content: input.trim() };
+    const userMsg: Message = { role: "user", content: input.trim().slice(0, RAG_CONFIG.maxInputChars) };
     setMessages((prev) => [...prev, userMsg]);
     setInput("");
     setIsLoading(true);
 
     try {
-      await streamChat([...messages, userMsg]);
+      const { answer } = generateLocalRagAnswer(userMsg.content, messages);
+      await streamLocalAnswer(answer);
     } catch (error) {
       console.error(error);
       setMessages((prev) => [
         ...prev,
         {
           role: "assistant",
-          content: "Desculpe, ocorreu um erro. Por favor, tente novamente ou entre em contato diretamente pelo email gabrielnbn@hotmail.com",
+          content: "Desculpe, ocorreu um erro local. Você também pode falar diretamente pelo email gabrielnbn@hotmail.com.",
         },
       ]);
     } finally {
@@ -127,10 +80,10 @@ const ChatBot = () => {
 
   return (
     <>
-      {/* Chat Toggle Button */}
       <motion.button
         onClick={() => setIsOpen(!isOpen)}
-        className="fixed bottom-6 right-6 z-50 w-14 h-14 md:w-16 md:h-16 rounded-full bg-gradient-primary flex items-center justify-center shadow-lg glow-primary"
+        aria-label={isOpen ? "Fechar chat" : "Abrir chat"}
+        className="fixed right-4 top-32 z-50 w-12 h-12 rounded-full bg-gradient-primary flex items-center justify-center shadow-lg glow-primary md:bottom-6 md:right-6 md:top-auto md:w-16 md:h-16"
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
         animate={{ rotate: isOpen ? 180 : 0 }}
@@ -142,7 +95,6 @@ const ChatBot = () => {
         )}
       </motion.button>
 
-      {/* Chat Window */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -150,20 +102,18 @@ const ChatBot = () => {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
             transition={{ duration: 0.2 }}
-            className="fixed bottom-24 right-6 z-50 w-[380px] max-w-[calc(100vw-3rem)] h-[500px] max-h-[calc(100vh-8rem)] glass rounded-2xl border border-primary/20 flex flex-col overflow-hidden shadow-2xl"
+            className="fixed right-4 top-48 z-50 w-[380px] max-w-[calc(100vw-2rem)] h-[500px] max-h-[calc(100vh-13rem)] glass rounded-2xl border border-primary/20 flex flex-col overflow-hidden shadow-2xl md:bottom-24 md:right-6 md:top-auto md:max-w-[calc(100vw-3rem)] md:max-h-[calc(100vh-8rem)]"
           >
-            {/* Header */}
             <div className="bg-gradient-primary p-4 flex items-center gap-3">
               <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center">
                 <Bot className="w-6 h-6 text-primary-foreground" />
               </div>
               <div>
                 <h3 className="font-bold text-primary-foreground">GABOT</h3>
-                <p className="text-xs text-primary-foreground/80">Online • Responde instantaneamente</p>
+                <p className="text-xs text-primary-foreground/80">RAG local • Sem dependências externas</p>
               </div>
             </div>
 
-            {/* Messages */}
             <div className="flex-1 overflow-y-auto p-4 space-y-4">
               {messages.map((msg, index) => (
                 <motion.div
@@ -217,15 +167,16 @@ const ChatBot = () => {
               <div ref={messagesEndRef} />
             </div>
 
-            {/* Input */}
             <div className="p-4 border-t border-primary/10">
               <div className="flex gap-2">
                 <input
                   type="text"
+                  aria-label="Mensagem para o GABOT"
                   value={input}
+                  maxLength={RAG_CONFIG.maxInputChars}
                   onChange={(e) => setInput(e.target.value)}
                   onKeyPress={handleKeyPress}
-                  placeholder="Digite sua mensagem..."
+                  placeholder="Pergunte sobre projetos, stack ou contato..."
                   className="flex-1 bg-muted/50 border border-primary/20 rounded-full px-4 py-2 text-sm focus:outline-none focus:border-primary transition-colors"
                   disabled={isLoading}
                 />
@@ -233,6 +184,7 @@ const ChatBot = () => {
                   onClick={handleSend}
                   disabled={!input.trim() || isLoading}
                   size="icon"
+                  aria-label="Enviar mensagem"
                   className="rounded-full bg-gradient-primary hover:opacity-90"
                 >
                   <Send className="w-4 h-4" />

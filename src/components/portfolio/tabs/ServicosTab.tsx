@@ -6,36 +6,36 @@ const services = [
   {
     icon: Code,
     title: "Desenvolvimento Web",
-    description: "Sites profissionais, landing pages e aplicações web com tecnologias modernas e código limpo.",
-    features: ["React / Next.js", "Performance otimizada", "SEO técnico", "Código escalável"],
-    highlight: "Mais Popular",
+    description: "Aplicações, portfólios e interfaces com tecnologias modernas, código limpo e manutenção previsível.",
+    features: ["React / TypeScript", "Performance", "Acessibilidade", "Arquitetura de componentes"],
+    highlight: "Frontend",
     popular: true,
   },
   {
     icon: Palette,
     title: "UI/UX Design",
-    description: "Interfaces elegantes e funcionais, projetadas com foco na experiência do usuário e conversão.",
-    features: ["Design System", "Responsivo", "Testes A/B", "Prototipagem"],
-    highlight: "Design Premium",
+    description: "Interfaces funcionais e consistentes, projetadas para clareza, navegação fluida e uso recorrente.",
+    features: ["Design System", "Responsivo", "Fluxos de uso", "Prototipagem"],
+    highlight: "Produto",
     popular: false,
   },
   {
     icon: Rocket,
     title: "Automação & IA",
-    description: "Soluções inteligentes com chatbots, automações de processos e integração de inteligência artificial.",
-    features: ["Chatbots IA", "Automações", "Integrações API", "Machine Learning"],
-    highlight: "Inovação",
+    description: "Soluções com chatbots locais, RAG, automações de processos e integração com dados.",
+    features: ["RAG local", "Automações", "Integrações API", "Machine Learning"],
+    highlight: "IA e Dados",
     popular: false,
   },
 ];
 
 const benefits = [
-  { icon: TrendingUp, title: "Alta Conversão", description: "Design estratégico para resultados" },
+  { icon: TrendingUp, title: "Clareza", description: "Decisões técnicas rastreáveis" },
   { icon: Smartphone, title: "100% Responsivo", description: "Perfeito em qualquer tela" },
   { icon: Zap, title: "Alta Performance", description: "Carregamento otimizado" },
   { icon: Search, title: "SEO Incluído", description: "Visibilidade orgânica" },
   { icon: Shield, title: "Segurança", description: "SSL e boas práticas" },
-  { icon: HeadphonesIcon, title: "Suporte 30d", description: "Acompanhamento pós-entrega" },
+  { icon: HeadphonesIcon, title: "Documentação", description: "Evolução mais simples" },
 ];
 
 interface ServicosTabProps {
@@ -56,10 +56,10 @@ const ServicosTab = ({ onNavigate }: ServicosTabProps) => {
         <div className="max-w-2xl">
           <span className="text-xs font-semibold text-primary uppercase tracking-widest">Serviços</span>
           <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mt-3 mb-4 leading-tight">
-            Soluções digitais para impulsionar seu negócio
+            Soluções digitais para produto, IA e dados
           </h1>
           <p className="text-muted-foreground text-lg leading-relaxed">
-            Desenvolvimento web profissional com foco em resultados mensuráveis e experiências de alto impacto.
+            Desenvolvimento profissional com foco em clareza técnica, UX, performance, segurança e manutenção.
           </p>
         </div>
       </div>
@@ -112,7 +112,7 @@ const ServicosTab = ({ onNavigate }: ServicosTabProps) => {
                       : "border-border hover:border-primary/50"
                   }`}
                 >
-                  Solicitar Orçamento
+                  Conversar
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
               </div>

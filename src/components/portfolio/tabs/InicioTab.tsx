@@ -30,7 +30,7 @@ const InicioTab = ({ onNavigate }: InicioTabProps) => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.1 }}
-                className="inline-flex items-center gap-2 px-3 py-1.5 rounded-md bg-primary/10 border border-primary/20 mb-6"
+                className="molecular-chip inline-flex items-center gap-2 px-3 py-1.5 rounded-md mb-6"
               >
                 <span className="w-1.5 h-1.5 rounded-full bg-primary" />
                 <span className="text-xs font-medium text-primary">{t("hero.available")}</span>
@@ -63,7 +63,7 @@ const InicioTab = ({ onNavigate }: InicioTabProps) => {
                 className="flex flex-col sm:flex-row gap-3"
               >
                 <Button
-                  onClick={() => onNavigate("contato")}
+                  onClick={() => onNavigate("portfolio")}
                   size="lg"
                   className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold rounded-md px-8 h-12 text-sm"
                 >
@@ -89,7 +89,7 @@ const InicioTab = ({ onNavigate }: InicioTabProps) => {
               transition={{ delay: 0.3, duration: 0.5 }}
               className="relative"
             >
-              <div className="bg-card border border-border rounded-2xl p-6 md:p-8">
+              <div className="molecular-panel rounded-2xl p-6 md:p-8">
                 {/* Profile header */}
                 <div className="flex items-center gap-4 mb-6 pb-6 border-b border-border">
                   <div className="w-24 h-24 rounded-xl overflow-hidden border-2 border-border flex-shrink-0">
@@ -109,10 +109,10 @@ const InicioTab = ({ onNavigate }: InicioTabProps) => {
                 <div className="grid grid-cols-3 gap-4 mb-6">
                   {[
                     { number: "20+", labelKey: "hero.projects", icon: TrendingUp },
-                    { number: "100%", labelKey: "hero.satisfaction", icon: CheckCircle2 },
-                    { number: "7d", labelKey: "hero.delivery", icon: Clock },
+                    { number: "A+", labelKey: "hero.satisfaction", icon: CheckCircle2 },
+                    { number: "12+", labelKey: "hero.delivery", icon: Clock },
                   ].map((stat) => (
-                    <div key={stat.labelKey} className="text-center p-3 rounded-lg bg-muted/50">
+                    <div key={stat.labelKey} className="molecular-tile text-center p-3 rounded-lg">
                       <stat.icon className="w-4 h-4 text-primary mx-auto mb-1.5" />
                       <div className="text-xl font-bold text-foreground">{stat.number}</div>
                       <div className="text-[10px] text-muted-foreground uppercase tracking-wider mt-0.5">
@@ -144,7 +144,7 @@ const InicioTab = ({ onNavigate }: InicioTabProps) => {
       </section>
 
       {/* Trust bar */}
-      <section className="border-y border-border bg-muted/30">
+      <section className="molecular-band">
         <div className="max-w-7xl mx-auto px-4 md:px-8 py-6">
           <div className="flex items-center justify-center gap-8 flex-wrap text-sm text-muted-foreground">
             <span className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-primary" />{t("hero.commitment")}</span>
@@ -156,65 +156,58 @@ const InicioTab = ({ onNavigate }: InicioTabProps) => {
         </div>
       </section>
 
-      {/* Testimonials */}
+      {/* Professional highlights */}
       <section className="border-t border-border">
         <div className="max-w-7xl mx-auto px-4 md:px-8 py-16 md:py-20">
           <div className="text-center mb-10">
-            <span className="text-xs font-semibold text-primary uppercase tracking-widest">Depoimentos</span>
-            <h2 className="text-2xl md:text-3xl font-bold mt-2">O que dizem sobre meu trabalho</h2>
+            <span className="text-xs font-semibold text-primary uppercase tracking-widest">Destaques</span>
+            <h2 className="text-2xl md:text-3xl font-bold mt-2">Como costumo resolver problemas</h2>
           </div>
 
           <div className="grid md:grid-cols-3 gap-6">
             {[
               {
-                name: "Carlos Silva",
-                role: "CEO — Velotech Bike",
-                content: "O site ficou incrível! Tivemos um aumento de 150% nos leads em apenas 2 meses. Profissional extremamente dedicado e pontual.",
-                avatar: "CS",
+                name: "Frontend e Produto",
+                role: "React, TypeScript, UI/UX",
+                content: "Interfaces responsivas, componentes consistentes, estados claros e atenção a performance, acessibilidade e manutenção.",
+                avatar: "FE",
               },
               {
-                name: "Ana Rodrigues",
-                role: "Diretora de Marketing",
-                content: "Gabriel entregou muito além do esperado. O design ficou moderno, responsivo e nossos clientes elogiam a experiência do site.",
-                avatar: "AR",
+                name: "IA Aplicada",
+                role: "RAG, automações e modelos",
+                content: "Soluções com busca semântica, interpretação de linguagem natural e automações conectadas a fluxos reais de trabalho.",
+                avatar: "IA",
               },
               {
-                name: "Pedro Mendes",
-                role: "Fundador — Startup IA",
-                content: "Implementou modelos de machine learning com precisão impressionante. Comunicação clara e entregas sempre no prazo combinado.",
-                avatar: "PM",
+                name: "Engenharia de Dados",
+                role: "SQL, dbt, Python",
+                content: "Pipelines, validações e dashboards criados com rastreabilidade, qualidade dos dados e visão analítica.",
+                avatar: "DB",
               },
               {
-                name: "Juliana Costa",
-                role: "Gerente de Projetos",
-                content: "Trabalhamos juntos em 3 projetos e todos foram entregues com qualidade excepcional. Recomendo sem hesitar.",
-                avatar: "JC",
+                name: "Segurança",
+                role: "Boas práticas web",
+                content: "Menor exposição de chaves, validação de entradas, dependências enxutas e atenção a rotas, headers e conteúdo externo.",
+                avatar: "SE",
               },
               {
-                name: "Rafael Oliveira",
-                role: "CTO — DataFlow",
-                content: "Os dashboards analíticos transformaram nossa tomada de decisão. Conhecimento técnico sólido e ótima visão de produto.",
-                avatar: "RO",
+                name: "Qualidade",
+                role: "Testes e revisão",
+                content: "Mudanças verificáveis, testes focados no risco e revisões que procuram bugs, regressões e pontos frágeis de UX.",
+                avatar: "QA",
               },
               {
-                name: "Mariana Santos",
-                role: "Empreendedora Digital",
-                content: "Meu e-commerce ficou perfeito. Velocidade de carregamento excelente e o SEO já trouxe resultados orgânicos em poucas semanas.",
-                avatar: "MS",
+                name: "Comunicação",
+                role: "Clareza de escopo",
+                content: "Contexto, decisões técnicas e próximos passos documentados de forma simples para facilitar evolução do projeto.",
+                avatar: "UX",
               },
             ].map((testimonial, index) => (
               <div
                 key={testimonial.name}
-                className="bg-card border border-border rounded-xl p-6 hover:border-primary/30 transition-all"
+                className="molecular-panel rounded-xl p-6 transition-all duration-200 hover:border-primary/30 hover:-translate-y-0.5"
               >
-                <div className="flex gap-0.5 mb-4">
-                  {[...Array(5)].map((_, i) => (
-                    <svg key={i} className="w-4 h-4 text-primary fill-primary" viewBox="0 0 20 20">
-                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                    </svg>
-                  ))}
-                </div>
-                <p className="text-sm text-muted-foreground leading-relaxed mb-5">"{testimonial.content}"</p>
+                <p className="text-sm text-muted-foreground leading-relaxed mb-5">{testimonial.content}</p>
                 <div className="flex items-center gap-3 pt-4 border-t border-border">
                   <div className="w-9 h-9 rounded-md bg-primary/10 flex items-center justify-center text-primary font-bold text-xs">
                     {testimonial.avatar}

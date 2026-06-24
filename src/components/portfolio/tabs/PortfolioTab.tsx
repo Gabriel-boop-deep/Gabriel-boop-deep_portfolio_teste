@@ -15,12 +15,12 @@ const projects = [
   },
   {
     title: "Velotech Bike Yourself",
-    description: "Loja virtual completa para bicicletas com catálogo de produtos e design focado em conversão.",
+    description: "Experiência web para bicicletas com catálogo de produtos, SEO técnico e navegação responsiva.",
     tags: ["React", "Tailwind CSS", "SEO"],
     image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600",
     githubUrl: "https://github.com/Nuono-Cyber/velotechbikeyourself",
     featured: true,
-    result: "+150% leads",
+    result: "Web Experience",
   },
   {
     title: "BANVIC Analytics",
@@ -48,11 +48,11 @@ const projects = [
   },
   {
     title: "Sistema de Agendamento",
-    description: "Gestão de agendamentos com calendário integrado e painel administrativo.",
+    description: "Gestão de agendamentos com calendário integrado, painel administrativo e estados de uso claros.",
     tags: ["Next.js", "PostgreSQL", "Auth"],
     image: "https://images.unsplash.com/photo-1611224923853-80b023f02d71?w=600",
     featured: false,
-    result: "-70% no-shows",
+    result: "Product Flow",
   },
 ];
 
@@ -166,13 +166,13 @@ const PortfolioTab = ({ onNavigate }: PortfolioTabProps) => {
           className="bg-card border border-border rounded-xl p-8 md:p-12 text-center"
         >
           <h2 className="text-2xl md:text-3xl font-bold mb-3">
-            Precisa de um projeto <span className="text-primary">como esses</span>?
+            Quer conversar sobre um projeto <span className="text-primary">como esses</span>?
           </h2>
           <p className="text-muted-foreground mb-6 max-w-xl mx-auto">
-            Vamos conversar sobre suas necessidades e criar uma solução personalizada.
+            Compartilhe contexto, objetivos e restrições para avaliarmos uma solução bem desenhada.
           </p>
           <Button onClick={() => onNavigate("contato")} size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold rounded-md px-8">
-            Solicitar Proposta <ArrowRight className="ml-2 h-4 w-4" />
+            Iniciar Conversa <ArrowRight className="ml-2 h-4 w-4" />
           </Button>
         </motion.div>
       </div>

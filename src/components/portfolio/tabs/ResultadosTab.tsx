@@ -1,35 +1,32 @@
 import { motion } from "framer-motion";
-import { Star, Quote, TrendingUp, Award, Clock, ArrowRight } from "lucide-react";
+import { Code2, Database, TrendingUp, Award, Clock, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const results = [
   { metric: "20+", label: "Projetos Entregues", icon: Award },
-  { metric: "100%", label: "Satisfação", icon: Star },
-  { metric: "50%", label: "Aumento em Conversão", icon: TrendingUp },
-  { metric: "7 dias", label: "Entrega Média", icon: Clock },
+  { metric: "12+", label: "Tecnologias no Stack", icon: Code2 },
+  { metric: "3", label: "Frentes Técnicas", icon: TrendingUp },
+  { metric: "A+", label: "Foco em Qualidade", icon: Clock },
 ];
 
-const testimonials = [
+const highlights = [
   {
-    name: "Velotech Bike Yourself",
-    role: "Loja de Bicicletas",
-    content: "Site profissional que elevou nossa presença digital. Design moderno, responsivo e otimizado para vendas.",
-    rating: 5,
-    result: "+150% leads",
+    name: "Web e Produto",
+    role: "React, TypeScript, UX",
+    content: "Interfaces responsivas, componentes consistentes, feedbacks claros e cuidado com performance e acessibilidade.",
+    result: "Frontend",
   },
   {
-    name: "Empresa Data Analytics",
-    role: "Análise de Dados",
-    content: "Dashboards e pipelines de dados que transformaram nossa tomada de decisão. Entregas dentro do prazo.",
-    rating: 5,
-    result: "100% no prazo",
+    name: "Dados",
+    role: "SQL, dbt, Python",
+    content: "Pipelines e análises com validação, rastreabilidade, organização de métricas e visão prática para tomada de decisão.",
+    result: "Data",
   },
   {
-    name: "Startup de IA",
-    role: "Tecnologia",
-    content: "Implementação de modelos de machine learning para classificação de imagens. Conhecimento técnico impressionante.",
-    rating: 5,
-    result: "95% precisão",
+    name: "IA Aplicada",
+    role: "RAG, ML, automações",
+    content: "Chatbots, busca semântica, interpretação de linguagem natural e modelos aplicados a problemas específicos.",
+    result: "AI",
   },
 ];
 
@@ -81,36 +78,31 @@ const ResultadosTab = ({ onNavigate }: ResultadosTabProps) => {
           ))}
         </div>
 
-        {/* Testimonials */}
-        <h2 className="text-xl font-bold mb-8">Depoimentos de clientes</h2>
+        {/* Highlights */}
+        <h2 className="text-xl font-bold mb-8">Evidências de atuação</h2>
         <div className="grid md:grid-cols-3 gap-6 mb-16">
-          {testimonials.map((testimonial, index) => (
+          {highlights.map((highlight, index) => (
             <motion.div
-              key={testimonial.name}
+              key={highlight.name}
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 + index * 0.1 }}
               className="bg-card border border-border rounded-xl p-6"
             >
               <div className="flex items-center justify-between mb-4">
-                <div className="flex gap-0.5">
-                  {[...Array(testimonial.rating)].map((_, i) => (
-                    <Star key={i} className="w-3.5 h-3.5 text-primary fill-primary" />
-                  ))}
-                </div>
-                <span className="text-xs font-medium text-primary bg-primary/10 px-2 py-0.5 rounded">{testimonial.result}</span>
+                <Database className="w-5 h-5 text-primary" />
+                <span className="text-xs font-medium text-primary bg-primary/10 px-2 py-0.5 rounded">{highlight.result}</span>
               </div>
 
-              <Quote className="w-6 h-6 text-border mb-3" />
-              <p className="text-muted-foreground text-sm mb-5 leading-relaxed">"{testimonial.content}"</p>
+              <p className="text-muted-foreground text-sm mb-5 leading-relaxed">{highlight.content}</p>
 
               <div className="flex items-center gap-3 pt-4 border-t border-border">
                 <div className="w-9 h-9 rounded-md bg-primary/10 flex items-center justify-center text-primary font-bold text-sm">
-                  {testimonial.name[0]}
+                  {highlight.name[0]}
                 </div>
                 <div>
-                  <div className="font-semibold text-sm">{testimonial.name}</div>
-                  <div className="text-xs text-muted-foreground">{testimonial.role}</div>
+                  <div className="font-semibold text-sm">{highlight.name}</div>
+                  <div className="text-xs text-muted-foreground">{highlight.role}</div>
                 </div>
               </div>
             </motion.div>

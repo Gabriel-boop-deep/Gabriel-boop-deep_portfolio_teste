@@ -9,6 +9,7 @@ import ContatoTab from "@/components/portfolio/tabs/ContatoTab";
 import Footer from "@/components/portfolio/Footer";
 import WhatsAppButton from "@/components/portfolio/WhatsAppButton";
 import ChatBot from "@/components/portfolio/ChatBot";
+import ScrollDnaBackground from "@/components/portfolio/ScrollDnaBackground";
 
 const Index = () => {
   const [activeTab, setActiveTab] = useState("inicio");
@@ -36,9 +37,10 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="relative min-h-screen bg-background">
+      <ScrollDnaBackground />
       <TabNavigation activeTab={activeTab} onTabChange={handleTabChange} />
-      <main>
+      <main className="relative z-10">
         <AnimatePresence mode="wait">
           {renderTabContent()}
         </AnimatePresence>

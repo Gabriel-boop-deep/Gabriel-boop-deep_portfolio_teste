@@ -104,7 +104,7 @@ const ContatoTab = () => {
                   size="lg"
                   className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold rounded-md h-12"
                 >
-                  <a href="mailto:gabrielnbn@hotmail.com?subject=Orçamento%20-%20Desenvolvimento%20Web&body=Olá%20Gabriel%2C%0A%0AVisitei%20seu%20portfólio%20e%20gostaria%20de%20um%20orçamento%20para%3A%0A%0A%5BDescreva%20seu%20projeto%20aqui%5D">
+                  <a href="mailto:gabrielnbn@hotmail.com?subject=Contato%20pelo%20portf%C3%B3lio&body=Ol%C3%A1%20Gabriel%2C%0A%0AVisitei%20seu%20portf%C3%B3lio%20e%20gostaria%20de%20conversar%20sobre%3A%0A%0A%5BDescreva%20o%20contexto%2C%20objetivo%20e%20links%20relevantes%5D">
                     <Mail className="mr-2 h-4 w-4" />
                     {t("contact.cta")}
                     <ArrowRight className="ml-2 h-4 w-4" />
